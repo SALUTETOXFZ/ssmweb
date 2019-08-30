@@ -173,15 +173,17 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
 
     var totalRecord,currentPage;
-    //1、页面加载完成以收，直接发送ajax请求，要到分页数据
+    //1、页面加载完成以后，直接发送ajax请求，要到分页数据
     $(function(){
         //去首页
         to_page(1);
         });
-        
+
+    //封装跳转页面的方法
     function to_page(page) {
         $.ajax({
             url:"${Path}/emps",
@@ -202,6 +204,7 @@
          });
     }
 
+    //拼接table表格的内容
     function build_emps_table(result) {
         //清空table表格
         $("#emps_table tbody").empty();
@@ -251,6 +254,7 @@
         totalRecord = result.extend.pageInfo.total;
         currentPage = result.extend.pageInfo.pageNum;
     }
+
     //解析显示分页条，处理分页条点击事件
     function buil_page_nav(result) {
         //page_nav_area
@@ -354,7 +358,7 @@
     function validate_add_form(){
         //1、拿到要校验的数据，使用正则表达式
         var empName = $("#empName_add_input").val();
-        var regName = /(^[a-zA-Z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{2,5})/;
+        var regName = /(^[a-zA-Z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{2,5}$)/;
         if(!regName.test(empName)){
             show_validate_msg("#empName_add_input","error", "用户可以是2-5位中文或者6-16位英文和数字的组合")
             return false;
@@ -460,7 +464,7 @@
 
     //1、按钮创建之前就绑定了click，所以绑不上
     //1）、可以在创建按钮的时候绑定，2）、绑定点击.live()
-    //jquery新版没有live(),使用on()惊醒替代
+    //jquery新版没有live(),使用on()进行替代
     $(document).on("click", ".edit_btn" ,function () {
        // alert("edit");
 
@@ -476,6 +480,7 @@
         });
     });
 
+    //向后端发出ajax请求并传入id 通过id查询得到employee
     function getEmp(id) {
         $.ajax({
             url:"${Path}/emp/"+id,

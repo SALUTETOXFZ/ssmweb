@@ -113,11 +113,10 @@ public class EmployeeController {
     @ResponseBody
     public Msg checkUser(@RequestParam("empName") String empName){
         //先判断用户名是否是合法的表达式
-        String regx = "(^[a-zA-Z0-9_-]{6,16}$)|(^[\\u2E80-\\u9FFF]{2,5})";
-        if (empName.matches(regx)){
-            return Msg.fail().add("va_msg","用户名已存在");
+        String regx = "(^[a-zA-Z0-9_-]{6,16}$)|(^[\\u2E80-\\u9FFF]{2,5}$)";
+        if (!empName.matches(regx)){
+            return Msg.fail().add("va_msg","用户可以是2-5位中文或者6-16位英文和数字的组合");
         }
-
         //数据库用户名重复校验
         boolean flag = employeeService.checkUser(empName);
         if(flag){

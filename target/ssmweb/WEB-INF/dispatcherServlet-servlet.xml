@@ -19,7 +19,6 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:include-filter>
     </context:component-scan>
 
-
     <!--能支持springMVC更高级的一些功能，JSR303校验，快速的ajax...映射动态请求-->
     <mvc:annotation-driven/>
 
